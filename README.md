@@ -17,6 +17,7 @@ local git config:
 Guide for git: https://rogerdudler.github.io/git-guide/
 
 ### VM
+> This Step is NOT necessary, if you already know how to create a VM skip to the section "Vagrant" 
 #### Create the VM
 
 1. Download the newest Ubuntu Long-Term-Support ISO (https://ubuntu.com/#download)
@@ -43,4 +44,6 @@ Guide for git: https://rogerdudler.github.io/git-guide/
     It works if you see the Apache2 Default Page.
 12. Create a snapshot
 
-#### Setup Vagrant
+### Vagrant
+1. Download Vagrant (https://www.vagrantup.com/downloads.html)
+2. 
