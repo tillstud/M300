@@ -45,5 +45,59 @@ Guide for git: https://rogerdudler.github.io/git-guide/
 12. Create a snapshot
 
 ### Vagrant
-1. Download Vagrant (https://www.vagrantup.com/downloads.html)
-2. 
+#### Create basic Vagrant VM
+1. Download & Install Vagrant (https://www.vagrantup.com/downloads.html)
+2. Create a new folder for your VM:
+
+```
+cd c:/where/you/store/your/vms
+mkdir myVagrantVM
+cd myVagrantVM
+```
+
+3. Create a new Vagrant VM:
+
+```
+vagrant init ubuntu/xenial64
+vagrant up --provider virtualbox 
+```
+
+4. SSH into the VM, where you can execute any Linux command as you usually would:
+
+```
+cd ./myVagrantVM
+vagrant ssh
+```
+
+5. Open the VM via the VirtualBox GUI (userneame=`vagrant` password=`vagrant`)
+
+#### Create Vagrant VM from file
+1. Download my vagrant file (./assets/vagrant/web/Vagrantfile)
+2. `cd` to that file
+3. Start it up: `vagrant up`
+4. Test if you can access `http://127.0.0.01:80` in your browser
+5. Test if you can change the `index.html` file which was created in the folder where the Vagrantfile lies.
+6. Destroy the VM `vagrant destroy -f`
+
+### VS Code
+1. If you don't have Visual Studio Code already, download & install it (https://code.visualstudio.com/)
+2. Recommended Extensions are:
+   - Markdown All in One (Yu Zhang)
+   - Vagrant (Marco Stanzi)
+   - vscode-pdf (tomiko1207)
+3. Open the Settings (`Ctrl` + `,`) and modify the global settigns to exclude .git / .svn / .hg / .vagrant / .DS_store files
+
+```
+ // Exclude .git / .svn / .hg / .vagrant / .DS_store files
+ "files.exclude": {
+   "**/.git": true,
+   "**/.svn": true,
+   "**/.hg": true,
+   "**/.vagrant": true,
+   "**/.DS_Store": true
+ },
+```
+
+4. Save and exit
+> Tipp: You can open a VScode terminal by grabbing the edge of the bottom most row and drag upwards.
+> Here you can use any commands you usually would in a Powershell/CMD windows (like git commands)
