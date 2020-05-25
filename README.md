@@ -1,7 +1,7 @@
 # M300
 Cross-platform services in a network
-======
-## Setup
+
+## 10 | Tools
 ### Git
 1. create a Repo on GitHub
 2. `git clone` of the repo
@@ -45,8 +45,10 @@ Guide for git: https://rogerdudler.github.io/git-guide/
 12. Create a snapshot
 
 ### Vagrant
+[Docs](https://www.vagrantup.com/docs/cli/)
+[Boxes](https://app.vagrantup.com/boxes/search)
 #### Create basic Vagrant VM
-1. Download & Install Vagrant (https://www.vagrantup.com/downloads.html)
+1. [Download](https://www.vagrantup.com/downloads.html) & Install Vagrant
 2. Create a new folder for your VM:
 
 ```
@@ -69,7 +71,7 @@ cd ./myVagrantVM
 vagrant ssh
 ```
 
-5. Open the VM via the VirtualBox GUI (userneame=`vagrant` password=`vagrant`)
+5. Open the VM via the VirtualBox GUI (username=`vagrant` password=`vagrant`)
 
 #### Create Vagrant VM from file
 1. Download my vagrant file (./assets/vagrant/web/Vagrantfile)
@@ -80,7 +82,7 @@ vagrant ssh
 6. Destroy the VM `vagrant destroy -f`
 
 ### VS Code
-1. If you don't have Visual Studio Code already, download & install it (https://code.visualstudio.com/)
+1. If you don't have Visual Studio Code already, [download](https://code.visualstudio.com/) & install it
 2. Recommended Extensions are:
    - Markdown All in One (Yu Zhang)
    - Vagrant (Marco Stanzi)
@@ -101,3 +103,143 @@ vagrant ssh
 4. Save and exit
 > Tipp: You can open a VScode terminal by grabbing the edge of the bottom most row and drag upwards.
 > Here you can use any commands you usually would in a Powershell/CMD windows (like git commands)
+
+## 20 | Infrastructure automation
+### Theory (Infrastructure as Code)
+To comply with the IaC condition a solution must be:
+1. Programmable
+   - API (Application programming interface) is a **must**!
+2. On-Demand
+   - Recourses like Servers, Storage and Networks must be created and destroyed quickly
+3. Self-Service
+   - Resources have to be tailorable to the customers needs
+4. Portable
+   - Supplier has to be interchangeable to prevent vendor Lock-in
+5. Secure
+   -  e. g. certified by ISO 27001
+
+IaC is based on software development best practices which usually are:
+- Version Control Systems (VCS)
+- Testdriven Development (TDD)
+- Continuous Integration (CI)
+- Continuous Delivery (CD)
+
+#### Goals
+- IT Infrastructure supports and allows change
+- Change is routine and doesn't cause any headache
+- Repeating tasks should be automated
+- Business users create and use the resources they need
+- Recovery should be quick and easy
+- Improvements happen continuously. **NO** risky and expensive "Big Bang" projects
+- Problems are solved through implementation, tests and monitoring
+
+#### Tools
+- Infrastructure Definition Tools
+  - To provide and configure a collection of resources (e.g. OpenStack, TerraForm, CloudFormation)
+- Server Configuration Tools
+  - For the provision and configuration of servers or VMs (e.g. Vagrant, Packer, Docker)
+- Package Management Tools
+  - For the provision and distribution of preconfigured software, comparable to an AppStore. 
+  - Linux: APT, YUM
+  - Windows: WiX 
+  - platform-neutral: SBT native packager
+- Scripting Tools
+  - CLI (Command-Line Interface) for step-by-step processing of commands. 
+  - Linux, Mac and Windows 10: Bash
+  - pure Windows: PowerShell
+- Versioning & Hubs
+  - For version control of the definition files and as storage of prepared images. (e.g. GitHub, Vagrant Boxes, Docker Hub, Windows VM)
+
+### Packer
+Packer is a tool to create Images (like Boxes for Vagrant) for multiple Dynamic Infrastructure Platforms via a JSON config file.
+Here's and example:
+```JSON
+    {
+      "provisioners": [
+        {
+          "type": "shell",
+          "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'",
+          "override": {
+            "virtualbox-iso": {
+              "scripts": [
+                "scripts/server/base.sh",
+              ]
+            }
+          }
+        }
+      ],
+      "builders": [
+        {
+          "type": "virtualbox-iso",
+      "boot_command": [
+        " preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubuntu-preseed.cfg<wait>",
+      ],
+        }
+      ],
+      "post-processors": [
+        {
+          "type": "vagrant",
+          "override": {
+            "virtualbox": {
+              "output": "ubuntu-server-amd64-virtualbox.box"
+            }
+          }
+        }
+      ]      
+    }
+```
+
+#### Installation
+1. [Download](https://www.packer.io/downloads/) Packer
+2. Create a `packer` folder in your %USERPROFILE%
+3. unzip the downloaded zip to that folder
+4. add the folder to your $PATH environment variable
+   1. Search for `Edit environment variables for your account`
+   2. edit `Path`
+   3. select `New` and type in `C:\Users\[YOUR USERNAME]\packer`
+5. Test it by opening a new shell and type `packer`
+
+### AWS
+#### Theory
+- Root Account
+  - Owner of the AWS Account, this user is allowed to do everything
+- Regions
+  - AWS has multiple server farms around the world, these are separated into regions like Ireland, Frankfurt or Virginia
+- IAM (Identity and Access Management)
+  - IAM is a managment system which allows the Root Account to create and manage users.
+- Network and Security
+  - In the AWS EC2 console you have the possibility to create and manage *Security Groups*, *Key Pairs* etc.
+    - *Security Groups*: define which ports are open.
+    - *Key Pairs*: are Private & Public key's which allow access to the VM's in AWS (The private key is stored by the user, the Public Key in AWS)
+- AWS Images
+  - Are VM Images provided by AWS out of the box, these can easily be instantiated through the EC2 console
+
+#### AWS & Vagrant example
+1. Install AWS Vagrant plugin `vagrant plugin install vagrant-aws`
+
+> When I tried this I got an error that a `libxml2` package was missing. TO resolve this follow this [StackOverFlow article](https://stackoverflow.com/a/52613723/13419962).
+
+2. Download a dummy VM `vagrant box add dummy https://github.com/mitchellh/vagrant-aws/raw/master/dummy.box`
+
+1. Create a [AWS](https://aws.amazon.com/) account (don't worry its free for a while, but you need a CreditCard and Phone Nr.)
+2. Go to [IAM](https://console.aws.amazon.com/iam/home)
+3. Under `Users` select `Add user`
+4. Under Access type select `Programmatic access`
+5. Give the user `AmazonEC2FullAccess` permissions
+6. Open the  `EC2` console
+7. ......................
+
+
+## 25 | Infrastructure Security
+
+
+## 30 | Container
+
+
+## 35 | Container Security
+
+
+## 40 | Kubernetes
+
+
+## 80 | Misc
