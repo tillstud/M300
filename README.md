@@ -1,6 +1,6 @@
 # M300
 Cross-platform services in a network
-=======================================================
+======================================================
 
 In this Document you can read my steps I did when going through the theoretical part of the different Workteams in [Modul 300](https://github.com/mc-b/M300).
 
@@ -8,7 +8,7 @@ My Learning Assessments:
 - [LB2](./LB2/README.md)
 - [LB3](./LB3/README.md)
 
-=======================================================
+======================================================
 
 Table of Contents
 - [M300](#m300)
@@ -37,7 +37,7 @@ Table of Contents
   - [40 | Kubernetes](#40--kubernetes)
   - [80 | Misc](#80--misc)
 
-=======================================================
+======================================================
 
 ## 10 | Tools
 ### Git
