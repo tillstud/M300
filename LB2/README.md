@@ -45,7 +45,7 @@
 - [] AuthO & AuthN via LDAP
 - [] Contribute to the original Documentation
   - Extend the Firewall & Proxy theory with my Documentation?
-  - 
+  - Autocorrect error? (Applikations-Funktionalitäten integrieren soll (z.B. ist die "Quota" auf einem Mailserver keine `personenbezogenes Datum`, sondern eine Applikations-Information).)
 - [] Comparison prior vs increased knowledge
 - [] Reflection
 

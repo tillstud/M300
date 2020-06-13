@@ -10,7 +10,7 @@ My Learning Assessments:
 
 Table of Contents
 - [M300 aka. Cross-platform services in a network](#m300-aka-cross-platform-services-in-a-network)
-  - [## 10 | Tools](#h2-id10--tools-86710--toolsh2)
+  - [## 10 | Tools](#h2-id10--tools-484110--toolsh2)
     - [markdown](#markdown)
     - [Git](#git)
     - [VM](#vm)
@@ -20,7 +20,7 @@ Table of Contents
       - [Create basic Vagrant VM](#create-basic-vagrant-vm)
       - [Create Vagrant VM from file](#create-vagrant-vm-from-file)
     - [VS Code](#vs-code)
-  - [## 20 | Infrastructure automation](#h2-id20--infrastructure-automation-86720--infrastructure-automationh2)
+  - [## 20 | Infrastructure automation](#h2-id20--infrastructure-automation-484120--infrastructure-automationh2)
     - [Theory (Infrastructure as Code)](#theory-infrastructure-as-code)
       - [Goals](#goals)
       - [Tools](#tools)
@@ -29,7 +29,7 @@ Table of Contents
     - [AWS](#aws)
       - [Theory](#theory)
       - [AWS & Vagrant example](#aws--vagrant-example)
-  - [## 25 | Infrastructure Security](#h2-id25--infrastructure-security-86725--infrastructure-securityh2)
+  - [## 25 | Infrastructure Security](#h2-id25--infrastructure-security-484125--infrastructure-securityh2)
     - [Theory](#theory-1)
       - [Firewall](#firewall)
       - [Reverse Proxy](#reverse-proxy)
@@ -40,10 +40,21 @@ Table of Contents
         - [Users](#users)
           - [Groups](#groups)
         - [Home directory](#home-directory)
-  - [## 30 | Container](#h2-id30--container-86730--containerh2)
-  - [## 35 | Container Security](#h2-id35--container-security-86735--container-securityh2)
-  - [## 40 | Kubernetes](#h2-id40--kubernetes-86740--kubernetesh2)
-  - [## 80 | Misc](#h2-id80--misc-86780--misch2)
+        - [Filesystem](#filesystem)
+      - [SSH](#ssh)
+        - [Public Key procedure](#public-key-procedure)
+          - [Commands](#commands)
+        - [SSH Tunnel](#ssh-tunnel)
+          - [Commands](#commands-1)
+      - [Authentication and Authorization](#authentication-and-authorization)
+        - [Secure Apache](#secure-apache)
+        - [LDAP](#ldap)
+          - [Commands](#commands-2)
+        - [Identity management](#identity-management)
+  - [## 30 | Container](#h2-id30--container-484130--containerh2)
+  - [## 35 | Container Security](#h2-id35--container-security-484135--container-securityh2)
+  - [## 40 | Kubernetes](#h2-id40--kubernetes-484140--kubernetesh2)
+  - [## 80 | Misc](#h2-id80--misc-484180--misch2)
 
 ## 10 | Tools
 ---
@@ -411,7 +422,333 @@ The groups are listed in the `/etc/group` file.
 
 ##### Home directory
 
+Their Home directory is the place where a user has full read and write privileges, here he can store his files.
+In the home directory are also the user specific setting files like `.bashrc` and `.ssh`, the config files usually start with a dot.
 
+The home directory is always at `/home/[USERNAME]/` or for short `~/`.
+
+In the `/etc/profile.d` folder are the settings for all users, not just the current user.
+
+##### Filesystem
+A filesystem is used to organize and structure the filed files.
+Besides data organization a filesystem can do a lot more like:
+ - create directories and subdirectories
+ - store Metadata
+ - use long filenames
+ - be Case sensitive (differentiate between upper and lower case)
+ - allow special characters for filenames
+ - Rights management of files and folders
+ - logging of every action
+
+Unix filesystems like Linux store data in a virtual filesystem (VFS). Every file has a unique Inode, which has properties like:
+- Filetype
+- Access rights
+- Size
+- Timestamps
+- Reference to file content
+
+Access rights control, which user or groupe can read, write and or execute which files/directories. 
+For example:
+```shell
+ls -ldh ./panter
+
+drwxr-xr-x 1 panter panter 4.0K Jun  8 16:38 ./panter
+```
+The first character tells us if it's a directory `d` or a file `-`.
+
+The access rights as separated into 3 sections:
+| Section | Entity |
+|-:|-|
+| rwx | Rights of the owner |
+| r-x | Rights of the group |
+| r-x | Rights of everybody else |
+
+The characters mean the following:
+| Character | Meaning |
+|:-:|-|
+| r | Read (Filenames and their contents) |
+| w | Write, allows for modification, deletion and creation of the specified directory and all subdirectories. |
+| x | Execute, allows execution of files like bash scripts and listing of additional file attributes. |
+| s | SUID-Bit, is used to specify that a file is only run by the owner. (This doesn't apply to folders) |
+| S | SGID-Bit, is used to specify that a file is only run by the file group |
+| t | Sticky-Bit, is used to restrict access to files and folders, so only the owner can remove or rename them. For example in `/tmp` |
+
+The following commands can change rights:
+| Command | Function |
+|-:|-|
+| `chmod` | Set file access |
+| `chown` | Change owner |
+| `chgrp` | Change group |
+
+#### SSH
+SSH originally comes from mid 1990, when computers still communicated via telephone. Getting someones password was trivial, which is why Tatu Ylönen decided to create a programme suite consisting of Server- Client- and helper programmes, he named it Secure Shell.
+
+Later he commercialized it with ssh.com but OpenBSD forked the original version and continued to create OpenSSH.
+
+The success came through the following major points:
+- Authentication of the communication partner, no longer was it easily possible to talk to the wrong partner.
+- Encryption of the messages, eavesdropping was no longer easily possible.
+- Data integrity, manipulation of the messages was no longer easily possible.
+
+Some of the most important commands are the following:
+
+Connect to a remote system:
+```shell
+ssh srv001             #without specifying the user
+ssh ubuntu@srv001      #with specifying the user
+```
+Run command on a remote system:
+```shell
+ssh srv001 ls -l
+```
+Create backup via ssh:
+```shell
+ssh root@srv001 "cd /etc; tar czvf - network/" | cat > etc_network_backup.tar.gz 
+```
+Copying files from one system to the other:
+```shell
+scp <FILE> <SERVER>:<FILE>  
+scp <SERVER>:<FILE> <FILE>
+```
+Additional Commands:
+- sftp  | File Transfer (encrypted)
+- sshfs | Mount remote filesystem
+
+##### Public Key procedure
+If the Authentication procedure via a encrypted password still isn't enough (because someone could guess the password) then you can use the Public Key procedure. Which utilizes asynchronous encryption to authenticate the user.
+
+The public key(s) of the user are usually stored at `~/.ssh/authorized_keys` of the destination system and the private key in a file (usually called `id_rsa` in the `~/.ssh` directory) of the local system which is protected with a user defined "Pass Phrase".
+
+When the user want's to authenticate with a SSH server via the Public Key procedure, he sends a random challenge encrypted with the private key (for which the "Pass Phrase" is required). When the server receives the cypher and can decrypt it with the public key the authentication of the user is achieved.
+
+###### Commands
+To start with the procedure you first need to create a key pair by using a tool calles `ssh-keygen`:
+```shell
+vagrant ssh web
+sudo su - admin
+
+ssh-keygen -t rsa -b 4096  # this is the actual generation
+```
+
+Alternatively if the root user needs to generate the key pair use:
+```shell
+su - admin -c "mkdir .ssh && chmod 700 .ssh && ssh-keygen -t rsa -f .ssh/id_rsa -b 4096 -C admin@company.local -P ''"
+```
+
+Now the the key (with the ending `.pub`) has to be trancfered to the target system. For this we use a tool called `ssh-copy-id` (at this point Authentication via password still has to be enables `PasswordAuthentication yes`)
+```shell
+ssh-copy-id -i ~/.ssh/id_rsa.pub admin@db 
+```
+
+If `ssh-copy-id` doesn't work you can copy the key any otherway to the target system. For example:
+```shell
+cat id_rsa.pub | ssh db 'cat>> ~/.ssh/authorized_keys' 
+```
+
+After that you can authenticate without a password:
+```shell
+ssh admin@db 
+```
+
+##### SSH Tunnel
+In a network tunneling means converting and transmitting of a communication protocol, which is transported embedded in another protocol.
+
+Before and after the the Tunnelpartner the original protocol is spoken but between the Tunnelpartners the other protocol is spoken.
+
+For this a Tunneling Software on both sides is necessary, which packages the information and unpacks it on the other side and hands it over.
+
+**The communication in the tunnel has to be encrypted!**
+
+###### Commands
+Forwarding Port 8000 of local host (database/db) to the Webserver (192.168.7.101:80)
+```shell
+cd user
+vagrant ssh database
+sudo su - admin
+
+ssh -L 8000:localhost:80 web -N &
+netstat -tulpen
+curl http://localhost:8000
+```
+
+Reversed, User on web/web can access the MySQL-Server on database/db via localhost:3307
+```shell
+vagrant ssh db
+ssh -R 3307:localhost:3306 web -N &
+ssh web
+
+netstat -tulpen
+curl http://localhost:3307
+```
+> The db server needs have the private key and the web server needs the public key. In addition ssh from `db` to `web` has to be done in advance, once.
+
+#### Authentication and Authorization
+**Authentication**
+
+Authentication is the proof (verification) of a claimed property of an entity, which can be, for example, a person, a device, a document or information and which thereby carries out its authentication.
+
+The associated verb is authenticate, which stands for proofing the authenticity of something. 
+In IT, the substantiated word authentication is often used both for the authorization checking process and for the result of this check. 
+In the German-speaking world, the term authentication is used to test authenticity and the term authentication to testify authenticity.
+
+The authentication of an entity with respect to the claimed property of authenticity, which can be, for example, granting an "existing access authorization" or "authenticity", allows the authenticated entity further actions. The entity is then considered authentic.
+
+The confirmation concluding an authentication is also referred to as authorization if it is restricted by certain permissible modes and / or in a certain context.
+
+**Authorization**
+
+Authorization is, in the broadest sense, consent, more specifically the granting of rights to interested parties, possibly for use by third parties. The authorization overcomes mechanisms of security against unauthorized persons. Authorization does not remove protection. Authorization may only apply to a limited extent in one context and / or mode. Authorization does not make sense without prior successful authentication.
+
+In IT, authorization refers to the initial assignment and the repeated preliminary checking of access rights using special methods with regard to interested system users for data and services.
+
+The two most common special cases are:
+
+- Permitted access to so-called resources (e.g. directories or files) in a computer network
+- Permission to install or use computer programs (software)
+
+##### Secure Apache
+HTTPS (Hypertext Transfer Protocol Secure) is a communication protocol for the internet, to transfer data without someone eavesdropping. It is a additional layer between HTTP and TCP.
+
+The current version of Apache is already prepared for HTTPS, we just need to enable it:
+```shell
+# Activate default configuration in /etc/apache2/sites-available
+sudo a2ensite default-ssl.conf
+
+# Activate SSL module in Apache2
+sudo a2enmod ssl
+
+# Optional, deactivate HTTP
+sudo a2dissite 000-default.conf 
+
+# Edit /etc/apache2/ports.conf and comment out line 80
+sudo nano /etc/apache2/ports.conf
+
+# Restart Apache server
+sudo service apache2 restart
+```
+
+To enable Username/Password authentication we have to:
+```shell
+# generate a .htpasswd file for a second user
+sudo htpasswd -c /etc/apache2/.htpasswd guest
+
+# edit /etc/apache2/sites-enabled/default-ssl.conf and past the following in front of </VirtualHost>
+<Directory "/var/www/html">
+        AuthType Basic
+        AuthName "Restricted Content"
+        AuthUserFile /etc/apache2/.htpasswd
+        Require valid-user
+</Directory>
+```
+
+##### LDAP
+LDAP is based on the Client-Server-Model and is a Directory Service.
+It defines the communication between the client and directory server.
+From this directory service we can get object-related data, for example user data or configuration files. This communication is based on requests.
+
+The directory could for example store a Address book of the employees.
+A user could use his/her E-Mail client to search for `Frank H` and the E-Mail client would formulates a LDAP query to the directory, which stores the address information. Then the directory Service formulates a response and sends it to the client `frank.hofmann@company.com`.
+
+In the meantime, it has become commonplace in administrative language to speak of an LDAP server. This means a directory server whose data structure corresponds to the LDAP specification and which can exchange data using the LDAPv3 protocol.
+
+**Example**
+
+In the ldap directory there is a vagrant file which installs OpenLDAP with UI (http://localhost:8081/phpldapadmin) on the master VM.
+
+Login via:
+- Login DN: cn=admin,dc=nodomain
+- Password: admin
+
+After that we can add LDIF formatted entries like:
+
+Posix-Gruppe
+```yaml
+dn: cn=apache2,dc=nodomain
+cn: apache2
+gidnumber: 500
+objectclass: posixGroup
+objectclass: top
+```
+Posix-Account
+```yaml
+dn: cn=Muster,cn=apache2,dc=nodomain
+cn:  Muster
+gidnumber: 500
+homedirectory: /home/users/Muster
+loginshell: /bin/sh
+objectclass: inetOrgPerson
+objectclass: posixAccount
+objectclass: top
+sn: Muster
+uid: muster
+uidnumber: 1000
+userpassword: {MD5}9WGq9u8L8U1CCLtGpMyzrQ==
+```
+
+After that the Apache Server has to be configured to get username/password from the LDAP Server.
+For that we need to extend the `/etc/apache2/apache2.conf` file:
+```xml
+<Directory /var/www/>
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    #Require all granted
+    Order deny,allow
+    Deny from All
+    AuthName "Company.com Intranet"
+    AuthType Basic
+    AuthBasicProvider ldap
+    #AuthzLDAPAuthoritative off
+    AuthLDAPUrl ldap://localhost/dc=nodomain?uid
+    Require valid-user
+    Satisfy any
+</Directory>
+```
+After we restart the apache Server `service apache2 restart` we can see a login at http://localhost:8081 where we can login with username `muster` and password `xxx`
+
+###### Commands
+Get Server info:
+```shell
+slapcat
+```
+Get all entires in LDAP Server:
+```shell
+ldapsearch -x -LLL -H ldap:/// -b dc=nodomain dn
+```
+
+##### Identity management
+Identity management (IdM) refers to the targeted and conscious handling of identity, anonymity and pseudo-anonymity. The ID card is an example of a form of identification prescribed by the state.
+
+Through the Internet, the question of conscious anonymity or conscious handling of parts of one's own identity has reached a new level of complexity never seen before.
+
+The internet regularly plays with (partial) identities. But there are also serious processes and questions of anonymity and identifiability on the Internet. In many ways, identity management systems can be problematic if it is not clear what happens to the data, which can lead to further unwanted identification.
+
+There are various forms of identity management in both the real and the digital world. According to ISO / IEC JTC 1 / SC 27 / WG 5 "A framework for IdM" IdM includes:
+
+- The identification process of a unit (including optional authentication)
+- The information associated with the identification of an entity within a particular context
+- Secure identity management
+
+**But why Identity management?**
+
+One of the reasons why companies deal with identity management is the requirement to keep personal data consistent, constantly available and reliably. Services such as a mail system or personnel accounting are dependent on this data. Without it, no individualized operation would be possible.
+
+*Example*
+
+An employee has a mail account that is only assigned to him. For this he needs an individual email address, a so-called account with the associated password. This data is only intended for him and not for the general public.
+
+*Counterexample*
+
+A company presentation is uniform for all employees and does not require individualization.
+
+**Identity management of companies**
+
+The larger a company is, the more identities and authorizations need to be managed. So-called identity management architectures are used for this. These are software components that manage the identities and their access rights.
+
+The term identity management in the software environment does not include a precisely defined range of functions. For example, simple systems focus exclusively on the synchronization of personal data, while more comprehensive architectures, include workflow processes that contain a hierarchical approval model to implement data changes.
+
+An identity management architecture should have a provisioning module that allows users to be automatically granted individual authorizations based on their respective roles (and tasks) in the organization. However, the question already arises as to how far identity management should integrate application functionalities beyond the exclusive management of personal data (e.g. the "quota" on a mail server is not a personal data, but application information).
+
+Identity management in a company often has interfaces to the so-called access management system, which fro example manages access rights for portals, enables single sign-on (SSO) or manages security policies. For the combination of identity management and access management, the term "Identity and Access Management" (IAM or IdAM) has been coined in IT.
 
 ## 30 | Container
 ---
