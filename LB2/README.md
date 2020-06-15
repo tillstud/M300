@@ -32,9 +32,14 @@ For this I needed:
 - User and Rights distribution
 
 ### Overview
-![A WebServer, ](/LB2/assets/architecture_diagram.svg)
-- some visualization
-- short description
+![A Web, Database and IAM Server](/LB2/assets/for_documentation/architecture_diagram.svg)
+
+- [HomePage](http://localhost:8080/)
+- [ReverseProxy_to_IAMServer](http://localhost:8080/iam)
+- [Adminer.php](http://localhost:8080/adminer.php)
+- [LDAP](http://localhost:8080/iam/phpldapadmin/)
+- [IAM_Data](http://localhost:8080/iam/data/)
+
 ### Test cases
 - just a couple of cases
 ### Security
