@@ -32,7 +32,7 @@ For this I needed:
 - User and Rights distribution
 
 ### Overview
-![A WebServer, ](/LB2/assets/architecture_diagram.xml)
+![A WebServer, ](/LB2/assets/architecture_diagram.svg)
 - some visualization
 - short description
 ### Test cases
