@@ -1,6 +1,6 @@
 # M300 aka. Cross-platform services in a network
 
-In this Document you can read the steps I did when going through the theoretical part of the different Workteams in [Modul 300](https://github.com/mc-b/M300).
+In this document you can read the steps I did when going through the theoretical part of the different Workteams in [Modul 300](https://github.com/mc-b/M300).
 
 My Learning Assessments:
 - [LB2](./LB2/README.md)
@@ -10,7 +10,7 @@ My Learning Assessments:
 
 Table of Contents
 - [M300 aka. Cross-platform services in a network](#m300-aka-cross-platform-services-in-a-network)
-  - [## 10 | Tools](#h2-id10--tools-484110--toolsh2)
+  - [## 10 | Tools](#h2-id10--tools-3210--toolsh2)
     - [markdown](#markdown)
     - [Git](#git)
     - [VM](#vm)
@@ -20,7 +20,7 @@ Table of Contents
       - [Create basic Vagrant VM](#create-basic-vagrant-vm)
       - [Create Vagrant VM from file](#create-vagrant-vm-from-file)
     - [VS Code](#vs-code)
-  - [## 20 | Infrastructure automation](#h2-id20--infrastructure-automation-484120--infrastructure-automationh2)
+  - [## 20 | Infrastructure automation](#h2-id20--infrastructure-automation-3220--infrastructure-automationh2)
     - [Theory (Infrastructure as Code)](#theory-infrastructure-as-code)
       - [Goals](#goals)
       - [Tools](#tools)
@@ -29,7 +29,7 @@ Table of Contents
     - [AWS](#aws)
       - [Theory](#theory)
       - [AWS & Vagrant example](#aws--vagrant-example)
-  - [## 25 | Infrastructure Security](#h2-id25--infrastructure-security-484125--infrastructure-securityh2)
+  - [## 25 | Infrastructure Security](#h2-id25--infrastructure-security-3225--infrastructure-securityh2)
     - [Theory](#theory-1)
       - [Firewall](#firewall)
       - [Reverse Proxy](#reverse-proxy)
@@ -51,10 +51,10 @@ Table of Contents
         - [LDAP](#ldap)
           - [Commands](#commands-2)
         - [Identity management](#identity-management)
-  - [## 30 | Container](#h2-id30--container-484130--containerh2)
-  - [## 35 | Container Security](#h2-id35--container-security-484135--container-securityh2)
-  - [## 40 | Kubernetes](#h2-id40--kubernetes-484140--kubernetesh2)
-  - [## 80 | Misc](#h2-id80--misc-484180--misch2)
+  - [## 30 | Container](#h2-id30--container-3230--containerh2)
+  - [## 35 | Container Security](#h2-id35--container-security-3235--container-securityh2)
+  - [## 40 | Kubernetes](#h2-id40--kubernetes-3240--kubernetesh2)
+  - [## 80 | Misc](#h2-id80--misc-3280--misch2)
 
 ## 10 | Tools
 ---
@@ -661,7 +661,7 @@ Login via:
 
 After that we can add LDIF formatted entries like:
 
-Posix-Gruppe
+Posix-Group
 ```yaml
 dn: cn=apache2,dc=nodomain
 cn: apache2

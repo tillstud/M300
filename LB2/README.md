@@ -24,8 +24,15 @@
 https://github.com/mc-b/M300/tree/master/vagrant/fwrp
 
 ### Idea
-- 
+Create multiple machines and connect them together to create a Web portal where only members can write text, but that text is visible in read only mode to anybody visiting the Webpage.
+
+For this I needed:
+- Web service
+- Database
+- User and Rights distribution
+
 ### Overview
+![A WebServer, ](/LB2/assets/architecture_diagram.xml)
 - some visualization
 - short description
 ### Test cases
@@ -88,7 +95,7 @@ https://github.com/mc-b/M300/tree/master/vagrant/fwrp
 - [] Scope
 - [] Cloud-Integration
 - [] AuthO & AuthN via LDAP
-- [] Contribute to the original Documentation
+- [x] Contribute to the original Documentation
   - Extend the Firewall & Proxy theory with my documentation?
   - Autocorrect error? (Applikations-Funktionalitäten integrieren soll (z.B. ist die "Quota" auf einem Mailserver keine `personenbezogenes Datum`, sondern eine Applikations-Information).)
 - [] Comparison prior vs increased knowledge
