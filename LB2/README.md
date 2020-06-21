@@ -1,5 +1,5 @@
-# LB1
-- [LB1](#lb1)
+# LB2
+- [LB2](#lb2)
   - [Documentation](#documentation)
     - [Idea](#idea)
     - [Overview](#overview)
