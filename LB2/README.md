@@ -9,7 +9,7 @@
       - [Reverse-Proxy](#reverse-proxy)
       - [User and Rights distribution](#user-and-rights-distribution)
       - [Access via SSH tunnel](#access-via-ssh-tunnel)
-    - [!Reflection](#reflection)
+    - [Reflection](#reflection)
       - [General](#general)
       - [Lessons Learned](#lessons-learned)
   - [Grading criteria](#grading-criteria)
@@ -119,7 +119,7 @@ vagrant ssh iam
 vagrant ssh db
 ```
 
-### !Reflection
+### Reflection
 #### General
 I was already familiar with Git, GitHub, VSCode, Python 3 and somewhat with Linux.
 
