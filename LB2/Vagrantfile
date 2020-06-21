@@ -35,10 +35,8 @@ SHELL
 	web.vm.network "forwarded_port", guest:80, host:8080, auto_correct: false
 	web.vm.provider "virtualbox" do |vb|
 	  vb.memory = "256"  
-	end
-	# Braucht es hier nicht, weil Standardseite    
-  	# web.vm.synced_folder ".", "/var/www/html"  
-  	# Wird nur in 1. VM gemountet, Fehler?
+	end   
+  	# DO NOT web.vm.synced_folder ".", "/var/www/html" you can't create a symlink in a symlink!
 	web.vm.synced_folder ".", "/vagrant"
 	web.vm.provision "shell", inline: <<-SHELL
 		sudo apt-get update
@@ -47,6 +45,10 @@ SHELL
 		sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password admin'
 		sudo apt-get -y install php libapache2-mod-php php-curl php-cli php-mysql php-gd mysql-client  
 		# Python backend
+		sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.5 1
+		sudo update-alternatives --config python
+		sudo apt install python3-pip -y
+		sudo pip3 install mysql-connector-python
 		sudo cp /vagrant/assets/for_web/index.html /var/www/html/
 		sudo cp /vagrant/assets/for_web/backend.py /usr/lib/cgi-bin/ && sudo chown www-data /usr/lib/cgi-bin/backend.py && sudo chmod 755 /usr/lib/cgi-bin/backend.py
 		sudo mkdir /usr/share/tmp/
@@ -62,19 +64,17 @@ SHELL
 		echo "Alias /adminer.php /usr/share/adminer/adminer.php" | sudo tee /etc/apache2/conf-available/adminer.conf
 		sudo a2enconf adminer.conf 
 		sudo a2enmod cgi
-		sudo cp /vagrant/rest /vagrant/restsql /usr/lib/cgi-bin/ && sudo chown www-data /usr/lib/cgi-bin/rest* && sudo chmod 755 /usr/lib/cgi-bin/rest*
 		sudo mkdir -p  /var/www/html/data && sudo chown www-data:www-data /var/www/html/data 
 		# Monitoring
 		sudo cp /vagrant/cron.root.web01 /var/spool/cron/crontabs/root && sudo chmod 600 /var/spool/cron/crontabs/root
 		# Reverse Proxy
-		# sudo apt-get install -y libapache2-mod-proxy-html libxml2-dev # obsolet im ApacheBin Packet enthalten
 		sudo a2enmod proxy
 		sudo a2enmod proxy_html
 		sudo a2enmod proxy_http
 		# Reverse Proxy
 		sudo cp /vagrant/001-reverseproxy.conf /etc/apache2/sites-available/
 		sudo ln -s /etc/apache2/sites-available/001-reverseproxy.conf /etc/apache2/sites-enabled/
-		# Services restart bzw. reload Konfiguration
+		# Services restart / reload config
 		sudo service cron reload
 		sudo service apache2 restart 
 		# Firewall
@@ -97,9 +97,8 @@ SHELL
   	  iam.vm.synced_folder ".", "/vagrant"  	
 	  iam.vm.provision "shell", inline: <<-SHELL
 		sudo apt-get update
-		sudo apt-get -y install debconf-utils apache2 nmap
+		sudo apt-get -y install debconf-utils apache2
 		sudo a2enmod cgi		
-		sudo cp /vagrant/rest /vagrant/network /usr/lib/cgi-bin/ && sudo chown www-data /usr/lib/cgi-bin/* && sudo chmod 755 /usr/lib/cgi-bin/*
 		sudo mkdir -p  /var/www/html/data && sudo chown www-data:www-data /var/www/html/data 
 		# OpenLDAP mit Admin UI - http://localhost:8081/phpldapadmin
 		export DEBIAN_FRONTEND=noninteractive
