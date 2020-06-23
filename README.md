@@ -3,8 +3,8 @@
 In this document you can read the steps I did when going through the theoretical part of the different Workteams in [Modul 300](https://github.com/mc-b/M300).
 
 My Learning Assessments:
-- [LB2](./LB2/README.md)
-- [LB3](./LB3/README.md)
+- [LB2](./LB2/)
+- [LB3](./LB3/)
 
 ---
 
