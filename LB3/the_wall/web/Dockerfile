@@ -15,8 +15,7 @@ RUN echo 'mysql-server mysql-server/root_password_again password admin' | debcon
 RUN apt-get -y install php libapache2-mod-php php-curl php-cli php-mysql php-gd mysql-client  
 
 # Python backend
-ENV TZ=Europe/Kiev
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.5 1
 RUN update-alternatives --config python
