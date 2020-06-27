@@ -15,8 +15,8 @@ services:
       MYSQL_PASSWORD: S3cr3tp4ssw0rd
       # create table data ( seq INT PRIMARY KEY AUTO_INCREMENT, uname TEXT, proposal TEXT, created TIMESTAMP DEFAULT CURRENT_TIMESTAMP )
 
-  adminer:
-    image: adminer
-    restart: always
+  web:
+    image: web
     ports:
-      - 8080:8080
+      - "8080:80"
+    volumes: /vagrant/compose/web:/var/www/html
