@@ -16,6 +16,8 @@ RUN apt-get -y install php libapache2-mod-php php-curl php-cli php-mysql php-gd 
 
 # Python backend
 ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Minsk
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.5 1
 RUN update-alternatives --config python
