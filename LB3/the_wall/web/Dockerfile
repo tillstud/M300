@@ -28,13 +28,13 @@ RUN ln -s /usr/share/tmp/text.txt /var/www/html/text.txt
 ADD src/000-default.conf /etc/apache2/sites-available/
 RUN chown www-data:www-data /usr/share/tmp/text.txt 
 # Admininer SQL UI 
-RUN mkdir /usr/share/adminer
-RUN wget "http://www.adminer.org/latest.php" -O /usr/share/adminer/latest.php
-RUN ln -s /usr/share/adminer/latest.php /usr/share/adminer/adminer.php
-RUN echo "Alias /adminer.php /usr/share/adminer/adminer.php" | sudo tee /etc/apache2/conf-available/adminer.conf
-RUN a2enconf adminer.conf 
-RUN a2enmod cgi
-RUN mkdir -p  /var/www/html/data && sudo chown www-data:www-data /var/www/html/data 
+# RUN mkdir /usr/share/adminer
+# RUN wget "http://www.adminer.org/latest.php" -O /usr/share/adminer/latest.php
+# RUN ln -s /usr/share/adminer/latest.php /usr/share/adminer/adminer.php
+# RUN echo "Alias /adminer.php /usr/share/adminer/adminer.php" | sudo tee /etc/apache2/conf-available/adminer.conf
+# RUN a2enconf adminer.conf 
+# RUN a2enmod cgi
+# RUN mkdir -p  /var/www/html/data && sudo chown www-data:www-data /var/www/html/data 
 CMD /bin/bash -c "source /etc/apache2/envvars && exec /usr/sbin/apache2 -DFOREGROUND"
 STOPSIGNAL SIGTERM
 #HEALTHCHECK --interval=15 --timeout=60 --retries=5 CMD [ "/usr/bin/my_health_check_script", "arg_1" ]
