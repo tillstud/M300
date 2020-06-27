@@ -167,7 +167,7 @@ RUN apt-get update && apt-get install -y mysql-server
 # modify /etc/mysql/mysql.conf.d/mysqld.cnf file via sed so that the MySQL prot is open for all
 RUN sed -i -e"s/^bind-address\s*=\s*127.0.0.1/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 
-RUN /tmp/db.sh
+RUN sudo /tmp/db.sh
 
 # Restart for config changes
 RUN service mysql restart

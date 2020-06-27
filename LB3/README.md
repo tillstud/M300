@@ -28,16 +28,46 @@ https://github.com/mc-b/M300/tree/master/docker/mysql
 https://github.com/mc-b/M300/tree/master/docker/compose
 
 ### Idea
+Currently my friends and I use the description field of our WhatsApp Group the write down what we'd like to do together.
+But recently we encountered a little problem, the description field has a max. character length...
+Also it can be quite tricky to figure out what the original idea was, because we don't write down our names with the event proposal.
 
+So I came up with the following solution:
+
+Create multiple machines and connect them together to create a Web portal where only members can write text, but that text is visible in read only mode to anybody visiting the Webpage.
+
+For this I needed:
+- Web service
+- Database
+- User and Rights distribution
+
+In the end I left out the IAM part, because of a lack of time and energy, but I still setup the server.
 
 ### Overview
+![A Web-, Database- and IAM-Server](/LB3/assets/architecture_diagram.svg)
 
+- [HomePage](http://localhost:8080/)
+- [ReverseProxy_to_IAMServer](http://localhost:8080/iam)
+- [Adminer.php](http://localhost:8080/adminer.php)
+  - Server: `192.168.55.100`
+  - Username: `root`
+  - Password: `admin`
+  - Database: `proposals`
+- [openLDAP](http://localhost:8080/iam/phpldapadmin/)
+  - Username: `cn=admin,dc=nodomain`
+  - Password: `admin`
 
 ### Installation
-
+1. git clone the repo
+2. run `docker build -t db .` in `M300/LB3/the_wall/db`
+3. run `docker build -t web .` in `M300/LB3/the_wall/web`
+4. run `docker build -t monitor .` in `M300/LB3/the_wall/monitor`
 
 ### Usage
-
+1. `docker run --rm -d --name db db`
+2. `docker run --rm -d --name web web`
+3. `docker run --rm -d --name monitor monitor`
+4. Visit `http://localhost:8080/` in your browser
 
 ### Test cases
 
