@@ -170,16 +170,16 @@ I also learned how to use Python as a backend (something which I have always wan
 ### K4 | Security
 - [X] Firewall with Rules is setup
 - [X] Reverse-Proxy is setup
-- [] User and Rights distribution is setup
+- [ ] User and Rights distribution is setup
 - [X] Access via SSH tunnel is secured
 - [X] Security measures are documented
 - [x] Project documented with MarkDown
 ### K5 | Misc criteria
 - [X] Creativity
 - [X] Complexity
-- [] Scope
-- [] Cloud-Integration
-- [] AuthO & AuthN via LDAP
+- [ ] Scope
+- [ ] Cloud-Integration
+- [ ] AuthO & AuthN via LDAP
 - [x] Contribute to the original Documentation
   - Extend the Firewall & Proxy theory with my documentation?
   - Autocorrect error? (Applikations-Funktionalitäten integrieren soll (z.B. ist die "Quota" auf einem Mailserver keine `personenbezogenes Datum`, sondern eine Applikations-Information).)
