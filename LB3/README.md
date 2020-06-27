@@ -59,9 +59,11 @@ In the end I left out the IAM part, because of a lack of time and energy, but I 
 
 ### Installation
 1. git clone the repo
-2. run `docker build -t db .` in `M300/LB3/the_wall/db`
-3. run `docker build -t web .` in `M300/LB3/the_wall/web`
-4. run `docker build -t monitor .` in `M300/LB3/the_wall/monitor`
+2. [setup docker](https://docs.docker.com/engine/install/)
+3. install docker compose `sudo apt-get install docker-compose`
+4. run `docker build -t db .` in `M300/LB3/the_wall/db`
+5. run `docker build -t web .` in `M300/LB3/the_wall/web`
+6. run `docker build -t monitor .` in `M300/LB3/the_wall/monitor`
 
 ### Usage
 1. `docker run --rm -d --name db db`
