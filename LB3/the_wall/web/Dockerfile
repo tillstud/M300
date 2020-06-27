@@ -8,6 +8,8 @@ ENV APACHE_RUN_GROUP www-data
 ENV APACHE_LOG_DIR /var/log/apache2
 EXPOSE 80
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get -q update
 RUN apt-get -q -y install debconf-utils apache2 
 RUN echo 'mysql-server mysql-server/root_password password admin' | debconf-set-selections
@@ -15,9 +17,6 @@ RUN echo 'mysql-server mysql-server/root_password_again password admin' | debcon
 RUN apt-get -y install php libapache2-mod-php php-curl php-cli php-mysql php-gd mysql-client  
 
 # Python backend
-ARG DEBIAN_FRONTEND=noninteractive
-ENV TZ=Europe/Minsk
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.5 1
 RUN update-alternatives --config python
