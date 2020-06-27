@@ -1,0 +1,22 @@
+# 
+version: '1'
+
+services:
+
+  db:
+    image: mysql
+    # https://hub.docker.com/_/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: proposals
+      MYSQL_USER: www-data
+      MYSQL_PASSWORD: S3cr3tp4ssw0rd
+      # create table data ( seq INT PRIMARY KEY AUTO_INCREMENT, uname TEXT, proposal TEXT, created TIMESTAMP DEFAULT CURRENT_TIMESTAMP )
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
