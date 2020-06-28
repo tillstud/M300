@@ -3,7 +3,7 @@
 FROM ubuntu:20.04
 LABEL maintainer="personal.spareemail@gmail.com"
 # DONT expose /var/www/html, becasue you can't create a symlink in a symlink!
-VOLUME /usr/share/tmp/
+VOLUME /var/log/apache2/
 EXPOSE 80
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -23,7 +23,7 @@ ADD src/index.html /var/www/html/
 ADD src/backend.py /usr/lib/cgi-bin/
 RUN chown www-data /usr/lib/cgi-bin/backend.py
 RUN chmod 755 /usr/lib/cgi-bin/backend.py
-# RUN mkdir /usr/share/tmp/
+RUN mkdir /usr/share/tmp/
 RUN touch /usr/share/tmp/text.txt
 RUN chmod 755 /usr/share/tmp/text.txt
 RUN ln -s /usr/share/tmp/text.txt /var/www/html/text.txt
