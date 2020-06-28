@@ -1,6 +1,6 @@
 # Template: https://gist.github.com/ju2wheels/3d1a1dfa498977874d03
 
-FROM httpd:2.4
+FROM ubuntu:20.04
 LABEL maintainer="personal.spareemail@gmail.com"
 VOLUME /usr/local/apache2/htdocs/
 EXPOSE 80
