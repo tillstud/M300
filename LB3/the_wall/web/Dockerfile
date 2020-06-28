@@ -38,7 +38,7 @@ RUN mkdir /usr/share/adminer
 RUN apt-get install wget
 RUN wget "http://www.adminer.org/latest.php" -O /usr/share/adminer/latest.php
 RUN ln -s /usr/share/adminer/latest.php /usr/share/adminer/adminer.php
-RUN echo "Alias /adminer.php /usr/share/adminer/adminer.php" | sudo tee /etc/apache2/conf-available/adminer.conf
+RUN echo "Alias /adminer.php /usr/share/adminer/adminer.php" | tee /etc/apache2/conf-available/adminer.conf
 RUN a2enconf adminer.conf 
 RUN a2enmod cgi
 RUN mkdir -p  /var/www/html/data && sudo chown www-data:www-data /var/www/html/data 
