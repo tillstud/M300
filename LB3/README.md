@@ -34,28 +34,23 @@ Also it can be quite tricky to figure out what the original idea was, because we
 
 So I came up with the following solution:
 
-Create multiple machines and connect them together to create a Web portal where only members can write text, but that text is visible in read only mode to anybody visiting the Webpage.
+Create multiple container and connect them together to create a Web portal visiters can write text and that text is visible to anybody visiting the Webpage.
 
 For this I needed:
 - Web service
 - Database
-- User and Rights distribution
-
-In the end I left out the IAM part, because of a lack of time and energy, but I still setup the server.
+- Monitoring Service
 
 ### Overview
 ![A Web-, Database- and IAM-Server](/LB3/assets/architecture_diagram.svg)
 
 - [HomePage](http://localhost:8080/)
-- [ReverseProxy_to_IAMServer](http://localhost:8080/iam)
 - [Adminer.php](http://localhost:8080/adminer.php)
-  - Server: `192.168.55.100`
+  - Server: `???`
   - Username: `root`
   - Password: `admin`
   - Database: `proposals`
-- [openLDAP](http://localhost:8080/iam/phpldapadmin/)
-  - Username: `cn=admin,dc=nodomain`
-  - Password: `admin`
+- [cAdvisor](http://localhost:9999/)
 
 ### Installation
 1. git clone the repo

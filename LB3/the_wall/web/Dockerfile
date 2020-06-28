@@ -18,16 +18,16 @@ RUN apt-get -y install php libapache2-mod-php php-curl php-cli php-mysql php-gd 
 RUN apt-get install python3 -y
 RUN apt install python3-pip -y
 RUN pip3 install mysql-connector-python
-ADD web/src/index.html /var/www/html/
+ADD src/index.html /var/www/html/
 # COPY ./my-httpd.conf /usr/local/apache2/conf/httpd.conf
-ADD web/src/backend.py /usr/lib/cgi-bin/
+ADD src/backend.py /usr/lib/cgi-bin/
 RUN chown www-data /usr/lib/cgi-bin/backend.py
 RUN chmod 755 /usr/lib/cgi-bin/backend.py
 RUN mkdir /usr/share/tmp/
 RUN touch /usr/share/tmp/text.txt
 RUN chmod 755 /usr/share/tmp/text.txt
 RUN ln -s /usr/share/tmp/text.txt /var/www/html/text.txt
-ADD web/src/000-default.conf /etc/apache2/sites-available/
+ADD src/000-default.conf /etc/apache2/sites-available/
 RUN chown www-data:www-data /usr/share/tmp/text.txt 
 
 # Admininer SQL UI 
