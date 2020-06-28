@@ -1,28 +1,27 @@
 # Template: https://gist.github.com/ju2wheels/3d1a1dfa498977874d03
 
-FROM ubuntu:20.04
+FROM httpd:2.4
 LABEL maintainer="personal.spareemail@gmail.com"
-VOLUME /var/www/html
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/log/apache2
+VOLUME /usr/local/apache2/htdocs/
 EXPOSE 80
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get -q update
-RUN apt-get -q -y install debconf-utils apache2 
+RUN apt-get -q -y install debconf-utils
 RUN echo 'mysql-server mysql-server/root_password password admin' | debconf-set-selections
 RUN echo 'mysql-server mysql-server/root_password_again password admin' | debconf-set-selections
 RUN apt-get -y install php libapache2-mod-php php-curl php-cli php-mysql php-gd mysql-client  
 
 # Python backend
 
+RUN apt-get install python3 -y
 #RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.5 1
 #RUN update-alternatives --config python
 RUN apt install python3-pip -y
 RUN pip3 install mysql-connector-python
 ADD src/index.html /var/www/html/
+# COPY ./my-httpd.conf /usr/local/apache2/conf/httpd.conf
 ADD src/backend.py /usr/lib/cgi-bin/
 RUN chown www-data /usr/lib/cgi-bin/backend.py
 RUN chmod 755 /usr/lib/cgi-bin/backend.py
