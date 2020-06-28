@@ -18,8 +18,8 @@ RUN apt-get -y install php libapache2-mod-php php-curl php-cli php-mysql php-gd 
 
 # Python backend
 
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.5 1
-RUN update-alternatives --config python
+#RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.5 1
+#RUN update-alternatives --config python
 RUN apt install python3-pip -y
 RUN pip3 install mysql-connector-python
 ADD src/index.html /var/www/html/
