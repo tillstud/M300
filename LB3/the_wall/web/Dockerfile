@@ -41,7 +41,11 @@ RUN ln -s /usr/share/adminer/latest.php /usr/share/adminer/adminer.php
 RUN echo "Alias /adminer.php /usr/share/adminer/adminer.php" | tee /etc/apache2/conf-available/adminer.conf
 RUN a2enconf adminer.conf 
 RUN a2enmod cgi
-RUN mkdir -p  /var/www/html/data && chown www-data:www-data /var/www/html/data 
+RUN mkdir -p  /var/www/html/data && chown www-data:www-data /var/www/html/data
+
+# Services restart / reload config
+RUN service cron reload
+RUN service apache2 restart 
 
 CMD /bin/bash -c "source /etc/apache2/envvars && exec /usr/sbin/apache2 -DFOREGROUND"
 STOPSIGNAL SIGTERM
