@@ -18,7 +18,7 @@ services:
   web:
     build: ./web
     ports:
-      - "8080:8080"
+      - "8080:80"
     volumes:
       - /compose/web:/var/www/html
 
