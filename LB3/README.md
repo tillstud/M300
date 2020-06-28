@@ -46,7 +46,7 @@ For this I needed:
 
 - [HomePage](http://localhost:8080/)
 - [Adminer.php](http://localhost:8080/adminer.php)
-  - Server: `172.18.0.4`
+  - Server: `172.18.0.1`
   - Username: `www-data`
   - Password: `S3cr3tp4ssw0rd`
   - Database: `proposals`
@@ -56,15 +56,13 @@ For this I needed:
 1. git clone the repo
 2. [setup docker](https://docs.docker.com/engine/install/)
 3. install docker compose `sudo apt-get install docker-compose`
-4. run `docker build -t db .` in `M300/LB3/the_wall/db`
-5. run `docker build -t web .` in `M300/LB3/the_wall/web`
-6. run `docker build -t monitor .` in `M300/LB3/the_wall/monitor`
+4. `docker-compose up -d`
 
 ### Usage
-1. `docker run --rm -d --name db db`
-2. `docker run --rm -d -p 8080:80 --name web web`
-3. `docker run --rm -d --name monitor monitor`
-4. Visit `http://localhost:8080/` in your browser
+1. Visit `http://localhost:8080/` in your browser
+2. Visit `http://localhost:9999/containers/` in your browser
+3. Visit `http://localhost:8080/adminer.php` in your browser
+> Use the credentials described in the [Overview](#overview) section.
 
 ### Test cases
 
