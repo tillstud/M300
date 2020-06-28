@@ -44,7 +44,6 @@ RUN a2enmod cgi
 RUN mkdir -p  /var/www/html/data && chown www-data:www-data /var/www/html/data
 
 # Services restart / reload config
-RUN service cron reload
 RUN service apache2 restart 
 
 CMD /bin/bash -c "source /etc/apache2/envvars && exec /usr/sbin/apache2 -DFOREGROUND"
