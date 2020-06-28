@@ -6,6 +6,8 @@ services:
   db:
     image: mysql
     # https://hub.docker.com/_/mysql
+    volumes:
+      - /compose/db:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
