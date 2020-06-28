@@ -17,8 +17,8 @@ services:
       MYSQL_PASSWORD: S3cr3tp4ssw0rd
       # create table data ( seq INT PRIMARY KEY AUTO_INCREMENT, uname TEXT, proposal TEXT, created TIMESTAMP DEFAULT CURRENT_TIMESTAMP )
     networks:
-      - wall_net:
-          ipv4_address: "172.18.0.1"
+        wall_net:
+            ipv4_address: 172.18.0.1
 
   web:
     build: ./web
@@ -27,20 +27,20 @@ services:
     volumes:
       - /compose/web:/var/www/html
     networks:
-      - wall_net:
-          ipv4_address: "172.18.0.2"
+        wall_net:
+            ipv4_address: 172.18.0.2
 
   monitor:
     image: google/cadvisor:latest
     ports:
       - "9999:8080"
     networks:
-      - wall_net:
-          ipv4_address: "172.18.0.3"
+        wall_net:
+            ipv4_address: 172.18.0.3
 
 networks:
     wall_net:
         ipam:
             driver: default
             config:
-                - subnet: "172.18.0.0/16"
+                - subnet: 172.18.0.0/16
