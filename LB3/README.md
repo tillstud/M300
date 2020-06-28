@@ -46,9 +46,9 @@ For this I needed:
 
 - [HomePage](http://localhost:8080/)
 - [Adminer.php](http://localhost:8080/adminer.php)
-  - Server: `???`
-  - Username: `root`
-  - Password: `admin`
+  - Server: `172.18.0.4`
+  - Username: `www-data`
+  - Password: `S3cr3tp4ssw0rd`
   - Database: `proposals`
 - [cAdvisor](http://localhost:9999/)
 

@@ -1,5 +1,5 @@
 # 
-version: '3.1'
+version: '3'
 
 services:
 
@@ -11,7 +11,7 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: S3cr3tp4ssw0rd
+      MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE: proposals
       MYSQL_USER: www-data
       MYSQL_PASSWORD: S3cr3tp4ssw0rd
