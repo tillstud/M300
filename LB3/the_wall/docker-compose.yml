@@ -1,5 +1,5 @@
 # 
-version: '3.1'
+version: '3'
 
 services:
 
@@ -25,7 +25,7 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - /compose/web:/var/www/html
+      - /compose/web:/var/log/apache2/
     networks:
         wall_net:
             ipv4_address: 172.20.0.12

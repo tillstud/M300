@@ -46,7 +46,7 @@ For this I needed:
 
 - [HomePage](http://localhost:8080/)
 - [Adminer.php](http://localhost:8080/adminer.php)
-  - Server: `172.20.0.11`
+  - Server: `172.20.0.11:3306`
   - Username: `www-data`
   - Password: `S3cr3tp4ssw0rd`
   - Database: `proposals`
