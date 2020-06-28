@@ -18,16 +18,16 @@ RUN apt-get -y install php libapache2-mod-php php-curl php-cli php-mysql php-gd 
 RUN apt-get install python3 -y
 RUN apt install python3-pip -y
 RUN pip3 install mysql-connector-python
-ADD src/index.html /var/www/html/
+ADD web/src/index.html /var/www/html/
 # COPY ./my-httpd.conf /usr/local/apache2/conf/httpd.conf
-ADD src/backend.py /usr/lib/cgi-bin/
+ADD web/src/backend.py /usr/lib/cgi-bin/
 RUN chown www-data /usr/lib/cgi-bin/backend.py
 RUN chmod 755 /usr/lib/cgi-bin/backend.py
 RUN mkdir /usr/share/tmp/
 RUN touch /usr/share/tmp/text.txt
 RUN chmod 755 /usr/share/tmp/text.txt
 RUN ln -s /usr/share/tmp/text.txt /var/www/html/text.txt
-ADD src/000-default.conf /etc/apache2/sites-available/
+ADD web/src/000-default.conf /etc/apache2/sites-available/
 RUN chown www-data:www-data /usr/share/tmp/text.txt 
 
 # Admininer SQL UI 
@@ -45,4 +45,4 @@ RUN service apache2 restart
 
 CMD /bin/bash -c "source /etc/apache2/envvars && exec /usr/sbin/apache2 -DFOREGROUND"
 STOPSIGNAL SIGTERM
-HEALTHCHECK --interval=5m --timeout=3s CMD curl -f localhost:3306 || exit 1
+HEALTHCHECK --interval=5m --timeout=3s CMD curl -f localhost:80 || exit 1
