@@ -23,7 +23,7 @@ ADD src/index.html /var/www/html/
 ADD src/backend.py /usr/lib/cgi-bin/
 RUN chown www-data /usr/lib/cgi-bin/backend.py
 RUN chmod 755 /usr/lib/cgi-bin/backend.py
-RUN mkdir /usr/share/tmp/
+# RUN mkdir /usr/share/tmp/
 RUN touch /usr/share/tmp/text.txt
 RUN chmod 755 /usr/share/tmp/text.txt
 RUN ln -s /usr/share/tmp/text.txt /var/www/html/text.txt
