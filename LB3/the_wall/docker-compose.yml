@@ -19,7 +19,8 @@ services:
     build: ./web
     ports:
       - "8080:80"
-    volumes: /compose/web:/var/www/html
+    volumes:
+      - /compose/web:/var/www/html
 
   monitor:
     image: google/cadvisor:latest
