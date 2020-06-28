@@ -10,7 +10,7 @@ def connect_sql():
     config = {
       'user': 'www-data',
       'password': 'S3cr3tp4ssw0rd',
-      'host': '172.20.0.11',
+      'host': '172.20.0.11:3306',
       'database': 'proposals',
       'raise_on_warnings': True
     }
