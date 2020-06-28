@@ -9,7 +9,7 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: S3cr3tp4ssw0rd
       MYSQL_DATABASE: proposals
       MYSQL_USER: www-data
       MYSQL_PASSWORD: S3cr3tp4ssw0rd
