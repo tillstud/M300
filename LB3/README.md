@@ -67,7 +67,7 @@ In the end I left out the IAM part, because of a lack of time and energy, but I 
 
 ### Usage
 1. `docker run --rm -d --name db db`
-2. `docker run --rm -d --name web web`
+2. `docker run --rm -d -p 8080:80 --name web web`
 3. `docker run --rm -d --name monitor monitor`
 4. Visit `http://localhost:8080/` in your browser
 

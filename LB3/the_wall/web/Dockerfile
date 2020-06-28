@@ -2,7 +2,8 @@
 
 FROM ubuntu:20.04
 LABEL maintainer="personal.spareemail@gmail.com"
-VOLUME /usr/local/apache2/htdocs/
+# DONT expose /var/www/html, becasue you can't create a symlink in a symlink!
+VOLUME /usr/share/tmp/
 EXPOSE 80
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -14,10 +15,7 @@ RUN echo 'mysql-server mysql-server/root_password_again password admin' | debcon
 RUN apt-get -y install php libapache2-mod-php php-curl php-cli php-mysql php-gd mysql-client  
 
 # Python backend
-
 RUN apt-get install python3 -y
-#RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.5 1
-#RUN update-alternatives --config python
 RUN apt install python3-pip -y
 RUN pip3 install mysql-connector-python
 ADD src/index.html /var/www/html/
@@ -43,8 +41,8 @@ RUN a2enmod cgi
 RUN mkdir -p  /var/www/html/data && chown www-data:www-data /var/www/html/data
 
 # Services restart / reload config
-RUN service apache2 restart 
+RUN service apache2 restart
 
 CMD /bin/bash -c "source /etc/apache2/envvars && exec /usr/sbin/apache2 -DFOREGROUND"
 STOPSIGNAL SIGTERM
-#HEALTHCHECK --interval=15 --timeout=60 --retries=5 CMD [ "/usr/bin/my_health_check_script", "arg_1" ]
+HEALTHCHECK --interval=5m --timeout=3s CMD curl -f localhost:3306 || exit 1
