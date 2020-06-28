@@ -8,9 +8,9 @@ import mysql.connector  # For Help: https://dev.mysql.com/doc/connector-python/e
 def connect_sql():
     """creates the connection to the sql server"""
     config = {
-      'user': 'root',
-      'password': 'admin',
-      'host': '192.168.55.100',
+      'user': 'www-data',
+      'password': 'S3cr3tp4ssw0rd',
+      'host': '172.20.0.11',
       'database': 'proposals',
       'raise_on_warnings': True
     }
