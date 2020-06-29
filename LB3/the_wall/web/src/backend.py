@@ -60,7 +60,7 @@ def write_local(uname, proposal):
     """writing input to local tmp file"""
     f = open("/usr/share/tmp/text.txt", "a")
     f.write("\n")
-    f.write(uname + " proposed: " + proposal)
+    f.write(str(uname) + " proposed: " + str(proposal))
     f.close()
     pass
 

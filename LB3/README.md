@@ -8,6 +8,9 @@
     - [Test cases](#test-cases)
     - [Security](#security)
     - [Theory](#theory)
+    - [Container](#container)
+    - [Docker](#docker)
+    - [Micro-services](#micro-services)
     - [Reflection](#reflection)
       - [General](#general)
       - [Lessons Learned](#lessons-learned)
@@ -23,9 +26,7 @@
 ---
 
 ## Documentation
-https://github.com/mc-b/M300/tree/master/docker/apache
-https://github.com/mc-b/M300/tree/master/docker/mysql
-https://github.com/mc-b/M300/tree/master/docker/compose
+This Project is based on: https://github.com/mc-b/M300/tree/master/docker/compose
 
 ### Idea
 Currently my friends and I use the description field of our WhatsApp Group the write down what we'd like to do together.
@@ -65,13 +66,26 @@ For this I needed:
 > Use the credentials described in the [Overview](#overview) section.
 
 ### Test cases
-
+| Nr. | Description | Check | Should-Situation | Is-Situation | OK? |
+|:-:|-|-|-|-|:-:|
+| 1 | `web` should be able to ping `db` on port `3306` | `nc -vz 172.20.0.11 3306` | `Connection to 172.20.0.11 3306 port [tcp/mysql] succeeded!` | `Connection to 172.20.0.11 3306 port [tcp/mysql] succeeded!` | Y |
+| 2 | `db` should be able to ping `web` on port `80` | `nc -vz 172.20.0.12 80` | `Connection to 172.20.0.12 80 port [tcp/httpd] succeeded!` | `Connection to 172.20.0.12 80 port [tcp/httpd] succeeded!` | Y |
+| 3 | On [web](http://localhost:8080/) anybody should be able to input their name, proposal and press submit.<br>After that the information should be stored in the `proposals/data` on the `db` server. | 1. `mysql -uwww-data -pS3cr3tp4ssw0rd`<br>2. `use proposals;`<br>3. `SELECT uname, proposal FROM data;` | check if the input values are visible in the list | Input Variables are visible. | Y |
+| 4 | Check if Python backend worked | After some Values are submitted on [web](http://localhost:8080/), they should be displayed under the submit button. | Values are displayed | Values are displayed, after I cleared my browser history. | N |
+| 5 | Check if `cAdvisor` works | After the containers are up and running [cAdvisor](http://localhost:9999/) should desplay live stats | Stats are displayed | Stats are displayed | Y |
+| 6 | Check if `Adminer` works | Open [localhost:8080/adminer.php](http://localhost:8080/adminer.php) and input the credentials described in the [Overview](#overview) section.<br>After that you should be presented with the view to select the `data` table. | Presented with the view to select the `data` table. | Presented with the view to select the `data` table. | Y |
 
 ### Security
+In general I'm not quite happy with the Security measures taken, because for example the CGI can be accessed by anybody and no IAM solution is implemented. Also every password is hardcoded and accessible to anybody (because this repo is public), which makes lateral movements through the network very easy!
 
+I wouldn't expose this setup to the Internet!
 
 ### Theory
-https://docs.docker.com/engine/install/ubuntu/  
+### Container
+https://docs.docker.com/engine/install/ubuntu/
+### Docker
+### Micro-services
+
 
 ### Reflection
 #### General
@@ -102,19 +116,19 @@ https://docs.docker.com/engine/install/ubuntu/
   - [ ] Micro-services
 - [x] Important Learning steps are documented
 ### K3 | Docker
-- [ ] Combine existing Docker containers
-- [ ] Use existing container as a backend and a desktop app as fronted
-- [ ] Volumes for persistent File storage is implemented
-- [ ] Knows the Docker commands
+- [x] Combine existing Docker containers
+- [x] Use existing container as a backend and a desktop app as fronted
+- [x] Volumes for persistent File storage is implemented
+- [x] Knows the Docker commands
 - [ ] Setup is documented
-  - [ ] Environment Variables
-  - [ ] Network diagram
-  - [ ] Layers
+  - [X] Environment Variables
+  - [X] Network diagram
+  - [X] Layers
   - [ ] Security aspects
 - [ ] Functionality tested with Test cases
 - [X] Project documented with MarkDown
 ### K4 | Security
-- [ ] Service monitoring is implemented
+- [x] Service monitoring is implemented
 - [ ] Active notifications are setup
 - [ ] min. 3 aspects of Container segmentation are taken into consideration
   - [ ] Kernel Exploits
@@ -126,17 +140,17 @@ https://docs.docker.com/engine/install/ubuntu/
 - [ ] Security measures are documented
 - [X] Project documented with MarkDown
 ### K5 | Misc criteria (general)
-- [ ] Creativity
-- [ ] Complexity
+- [x] Creativity
+- [x] Complexity
 - [ ] Scope
-- [ ] Realization of your own idea
-- [ ] Contribute to the original Documentation
+- [X] Realization of your own idea
+- [X] Contribute to the original Documentation
   - Bestehenden Docker-`Dontainer` kombinieren
   - MAINTAINER ist veraltet (https://docs.docker.com/engine/reference/builder/#maintainer-deprecated)
 - [ ] Comparison prior vs increased knowledge
 - [ ] Reflection
 ### K6 | Misc criteria (Systems engineers)
-- [ ] Complex networking of Container Infrastructure (Approaches for real usage scenarios)
+- [x] Complex networking of Container Infrastructure (Approaches for real usage scenarios)
 - [ ] Make Image available (via Dockerfile, Registry or Archive file)
 - [ ] CI setup (Continuous Integration)
 - [ ] Cloud-Integration
