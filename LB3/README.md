@@ -5,6 +5,8 @@
     - [Overview](#overview)
     - [Installation](#installation)
     - [Usage](#usage)
+      - [Web UI](#web-ui)
+      - [CLI](#cli)
     - [Test cases](#test-cases)
     - [Security](#security)
       - [Aspects](#aspects)
@@ -73,10 +75,19 @@ For this I needed:
 4. `docker-compose up -d`
 
 ### Usage
+
+#### Web UI
+
 1. Visit `http://localhost:8080/` in your browser
 2. Visit `http://localhost:9999/containers/` in your browser
 3. Visit `http://localhost:8080/adminer.php` in your browser
 > Use the credentials described in the [Overview](#overview) section.
+
+#### CLI
+
+1. Get into the Container `docker exec -it the_wall_web_1 bash`
+2. `python3 /usr/lib/cgi-bin/backend.py -n [THE_NAME] -p [THE_PROPOSAL]`
+3. Visit `http://localhost:8080/` in your browser
 
 ### Test cases
 | Nr. | Description | Check | Should-Situation | Is-Situation | OK? |
@@ -84,9 +95,10 @@ For this I needed:
 | 1 | `web` should be able to ping `db` on port `3306` | `nc -vz 172.20.0.11 3306` | `Connection to 172.20.0.11 3306 port [tcp/mysql] succeeded!` | `Connection to 172.20.0.11 3306 port [tcp/mysql] succeeded!` | Y |
 | 2 | `db` should be able to ping `web` on port `80` | `nc -vz 172.20.0.12 80` | `Connection to 172.20.0.12 80 port [tcp/httpd] succeeded!` | `Connection to 172.20.0.12 80 port [tcp/httpd] succeeded!` | Y |
 | 3 | On [web](http://localhost:8080/) anybody should be able to input their name, proposal and press submit.<br>After that the information should be stored in the `proposals/data` on the `db` server. | 1. `mysql -uwww-data -pS3cr3tp4ssw0rd`<br>2. `use proposals;`<br>3. `SELECT uname, proposal FROM data;` | check if the input values are visible in the list | Input Variables are visible. | Y |
-| 4 | Check if Python backend worked | After some Values are submitted on [web](http://localhost:8080/), they should be displayed under the submit button. | Values are displayed | Values aren't displayed, the browser doesn't pass the submitted values to the backend adn cant locate the backend file in `/usr/lib/cgi-bin/backend.py`. | N |
-| 5 | Check if `cAdvisor` works | After the containers are up and running [cAdvisor](http://localhost:9999/) should desplay live stats | Stats are displayed | Stats are displayed | Y |
-| 6 | Check if `Adminer` works | Open [localhost:8080/adminer.php](http://localhost:8080/adminer.php) and input the credentials described in the [Overview](#overview) section.<br>After that you should be presented with the view to select the `data` table. | Presented with the view to select the `data` table. | Presented with the view to select the `data` table. | Y |
+| 4 | Check if Python backend Web interface worked | After some Values are submitted on [web](http://localhost:8080/), they should be displayed under the submit button. | Values are displayed | Values aren't displayed, the browser doesn't pass the submitted values to the backend adn cant locate the backend file in `/usr/lib/cgi-bin/backend.py`. | N |
+| 5 | Check if Python backend CLI worked | After some Values are submitted on via the CLI, like : `python3 /usr/lib/cgi-bin/backend.py -n Tester -p "Works :)"` , they should be displayed under the submit button on the [Web UI]((http://localhost:8080/)) and also via [Adminer.php](http://localhost:8080/adminer.php) on the `db`. | Values are displayed and stored on `db` | Values are displayed and stored on `db` | Y |
+| 6 | Check if `cAdvisor` works | After the containers are up and running [cAdvisor](http://localhost:9999/) should desplay live stats | Stats are displayed | Stats are displayed | Y |
+| 7 | Check if `Adminer` works | Open [localhost:8080/adminer.php](http://localhost:8080/adminer.php) and input the credentials described in the [Overview](#overview) section.<br>After that you should be presented with the view to select the `data` table. | Presented with the view to select the `data` table. | Presented with the view to select the `data` table. | Y |
 
 For debugging:
 ```shell
@@ -704,6 +716,7 @@ But before this project I hadn't written Dockerfile whatsoever, so everything wa
 
 At first this was quite overwhelming, but after a couple of sessions I got the hang of if quite quickly.
 I started to use docker compose with `docker-compose kill && docker-compose rm` and `docker-compose up -d --build` and wrote down the command I had used inside the container (`docker exec -it [THE_CONTAINER_NAME] bash`), so I could trace back what I did and put the commands into my Dockerfile.
+I also learned to use `sys` and `getopt` from the [Python Standard Library](https://docs.python.org/3/library/) to create a CLI interface.
 This time I didn't make the mistake of spending most of my time on Theory, rather focus on my project and treat the Theory documentation part rather as a side-task.
 
 ---
