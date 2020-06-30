@@ -9,26 +9,23 @@
     - [Security](#security)
       - [Aspects](#aspects)
     - [Theory](#theory)
-    - [Container](#container)
-      - [Traits](#traits)
-      - [History](#history)
-    - [Docker](#docker)
-      - [Architecture](#architecture)
-      - [Commands](#commands)
-      - [Dockerfile](#dockerfile)
-      - [Concepts](#concepts)
-      - [Networking](#networking)
-        - [Host Connection](#host-connection)
-        - [Container Connection](#container-connection)
-      - [Volumes](#volumes)
-        - [Volumes](#volumes-1)
-          - [Examples](#examples)
-        - [File container](#file-container)
-          - [Examples](#examples-1)
-        - [Named Volumes](#named-volumes)
-          - [Examples](#examples-2)
-      - [Installation](#installation-1)
-    - [Micro-services](#micro-services)
+      - [Container](#container)
+        - [Traits](#traits)
+        - [History](#history)
+      - [Docker](#docker)
+        - [Architecture](#architecture)
+        - [Commands](#commands)
+        - [Dockerfile](#dockerfile)
+        - [Concepts](#concepts)
+        - [Networking](#networking)
+          - [Host Connection](#host-connection)
+          - [Container Connection](#container-connection)
+        - [Volumes](#volumes)
+          - [Volumes](#volumes-1)
+          - [File container](#file-container)
+          - [Named Volumes](#named-volumes)
+        - [Installation](#installation-1)
+      - [Micro-services](#micro-services)
     - [Reflection](#reflection)
       - [General](#general)
       - [Lessons Learned](#lessons-learned)
@@ -113,8 +110,10 @@ I wouldn't expose this setup to the Internet!
 
 
 ### Theory
-### Container
-#### Traits
+
+#### Container
+
+##### Traits
 Containers are fundamentally changing the way we develop, distribute, and run software.
 Developers can build software locally that will run the same elsewhere - be it a rack in the IT department, a user's laptop or a cluster in the cloud.
 Administrators can focus on networks, resources, and uptime, and spend less time configuring environments and fighting system dependencies.
@@ -128,7 +127,8 @@ Administrators can focus on networks, resources, and uptime, and spend less time
 - Containers are lightweight, i.e. dozens can be operated in parallel.
 - Containers are "cloud ready"!
 
-#### History
+##### History
+
 Containers are an old concept. For decades, the chroot command has been available in UNIX systems, which offers a simple form of file system isolation.
 
 FreeBSD has had the jail tool since 1998, which extends chroot sandboxing to processes.
@@ -146,13 +146,16 @@ In 2013 Docker finally delivered the missing parts for the containerization puzz
 Recommended reading: [The Missing Introduction To Containerization](https://medium.com/faun/the-missing-introduction-to-containerization-de1fbb73efc5)
 
 
-### Docker
+#### Docker
+
 Docker took the existing Linux container technology and packaged and expanded it in many ways - primarily through portable images and a user-friendly interface - to create a complete solution for creating and distributing containers.
 
 Put simply, the Docker platform consists of two separate components: the Docker Engine, which is responsible for creating and executing containers, and the Docker Hub, a cloud service for distributing container images.
 
 >Docker was developed for 64-bit Linux systems, but can also be operated using VirtualBox on Mac and Windows.
-#### Architecture
+
+##### Architecture
+
 **Docker Deamon**
 
 - Build, run and monitor the containers
@@ -188,7 +191,8 @@ The standard registry is the Docker Hub, on which thousands of publicly availabl
 
 Many organizations and companies use their own registries to host commercial or "private" images, but also to avoid the overhead associated with downloading images over the Internet.
 
-#### Commands
+##### Commands
+
 Official Docs: https://docs.docker.com/engine/reference/commandline/docker/
 
 **docker run**
@@ -321,7 +325,8 @@ docker start [THE_CONTAINER_ID]
   - Returns information about the running processes in a specified container.
 
 
-#### Dockerfile
+##### Dockerfile
+
 A Dockerfile is a text file with a number of steps that can be used to create a Docker image.
 
 To do this, a directory is first created and a file named "Dockerfile" in it.
@@ -349,7 +354,7 @@ netstat -tulpen
 
 >Tipp: use this template: https://gist.github.com/ju2wheels/3d1a1dfa498977874d03
 
-#### Concepts
+##### Concepts
 
 **Build context**
 
@@ -402,8 +407,10 @@ HEALTHCHECK --interval=5m --timeout=3s \ CMD curl -f http://localhost/ || exit 1
   - Sets the working directory for all subsequent RUN, CMD, ENTRYPOINT, ADD or COPY statements.
 
 
-#### Networking
-##### Host Connection
+##### Networking
+
+###### Host Connection
+
 Imagine running a web server in a container. How can you then give the outside world access to it?
 
 The answer is to "publish" ports with the -p or -P commands. This command forwards ports to the container's host.
@@ -455,7 +462,7 @@ Once all work has been carried out, the MySQL server in the Docker Container sho
 mysql -u root -p admin -h 127.0.0.1
 ```
 
-##### Container Connection
+###### Container Connection
 
 With Docker, "networks" can be created and managed separately from containers.
 
@@ -547,7 +554,7 @@ Start MySQL Client (on Ubuntu):
 mysql -u root -p admin -h ${MYSQL_PORT_3306_TCP_ADDR}
 ```
 
-#### Volumes
+##### Volumes
 
 So far, all changes in the file system were completely lost when the Docker container was deleted.
 
@@ -566,7 +573,7 @@ Example MySQL:
 VOLUME /var/lib/mysql
 ```
 
-##### Volumes
+###### Volumes
 
 Volumes are a special directory on the host in which one or more containers store their data.
 
@@ -581,7 +588,7 @@ Volumes offer several useful functions for persistent or shared data:
 - Volumes are designed so that the data persists regardless of the life cycle of the container.
 - Docker never deletes volumes automatically when you remove a container, so "garbage" can be left over
 
-###### Examples
+####### Examples
 
 Start the Busybox container and create a new volume `/data`:
 
@@ -623,7 +630,7 @@ Mount a single file on the host:
 docker run --rm -it -v ~/.bash_history:/root/.bash_history ubuntu /bin/bash
 ```
 
-##### File container
+###### File container
 
 In the past, data containers were created, the sole purpose of which was to share data with other containers.
 
@@ -631,7 +638,7 @@ First a container had to be started via `docker run` so that others could access
 
 This method was functional but could not be expanded.
 
-###### Examples
+####### Examples
 
 Create container with data container `dbdata`:
 ```shell
@@ -646,7 +653,7 @@ ls -l /dbdata
 
 The data container `dbdata` is now mounted under the root directory as `/dbdata`.
 
-##### Named Volumes
+###### Named Volumes
 
 The `docker volume` command for managing volumes on a Docker host has existed since version 1.9 of Docker:
 
@@ -656,7 +663,7 @@ The `docker volume` command for managing volumes on a Docker host has existed si
 - If no default files are required on the volume, a separate data container can be omitted.
 - With this step, various file systems and options can now be used efficiently in containers.
 
-###### Examples
+####### Examples
 
 Create a volume `mysql`:
 ```shell
@@ -678,11 +685,12 @@ The dependency volume directory can also be stored in the Dockerfile:
 VOLUME mysql:/var/lib/mysql
 ```
 
-#### Installation
+##### Installation
 
 To get started with Docker Engine on Ubuntu, make sure you [meet the prerequisites](https://docs.docker.com/engine/install/ubuntu/#prerequisites), then [install Docker](https://docs.docker.com/engine/install/ubuntu/#installation-methods).
 
-### Micro-services
+#### Micro-services
+
 Microservices are one of the largest use cases and the strongest driving force behind the rise of containers.
 
 Microservices are a way of developing and combining software systems in such a way that they consist of small, independent components that interact with each other via the network. This is in contrast to the classic, monolithic way of software development, where there is a single, large program.
@@ -692,7 +700,9 @@ If such a monolith then has to be scaled, it is usually only possible to choose 
 In a microservices architecture, it is possible to scale only the resources that are required for a particular service, and thus to be restricted to the bottlenecks of the system. In a monolith, everything or nothing is scaled, which leads to wasted resources.
 
 ### Reflection
+
 #### General
+
 
 
 #### Lessons Learned
@@ -702,13 +712,17 @@ In a microservices architecture, it is possible to scale only the resources that
 ---
 
 ## Grading criteria
+
 ### K1 | Tool environment
+
 - [x] VirtualBox
 - [x] Vagrant
 - [x] VS Code
 - [x] Git Client
 - [X] SSH Key for Client
+
 ### K2 | Learning environment
+
 - [x] GitHub Account created
 - [x] Git-Client was used
 - [x] Documentation is written in Markdown
@@ -719,7 +733,9 @@ In a microservices architecture, it is possible to scale only the resources that
   - [X] Docker
   - [X] Micro-services
 - [x] Important Learning steps are documented
+
 ### K3 | Docker
+
 - [x] Combine existing Docker containers
 - [x] Use existing container as a backend and a desktop app as fronted
 - [x] Volumes for persistent File storage is implemented
@@ -731,7 +747,9 @@ In a microservices architecture, it is possible to scale only the resources that
   - [X] Security aspects
 - [X] Functionality tested with Test cases
 - [X] Project documented with MarkDown
+
 ### K4 | Security
+
 - [x] Service monitoring is implemented
 - [ ] Active notifications are setup
 - [X] min. 3 aspects of Container segmentation are taken into consideration
@@ -742,7 +760,9 @@ In a microservices architecture, it is possible to scale only the resources that
   - [ ] Revealed secrets
 - [X] Security measures are documented
 - [X] Project documented with MarkDown
+
 ### K5 | Misc criteria (general)
+
 - [x] Creativity
 - [x] Complexity
 - [X] Scope
@@ -752,7 +772,9 @@ In a microservices architecture, it is possible to scale only the resources that
   - MAINTAINER ist veraltet (https://docs.docker.com/engine/reference/builder/#maintainer-deprecated)
 - [ ] Comparison prior vs increased knowledge
 - [ ] Reflection
+
 ### K6 | Misc criteria (Systems engineers)
+
 - [X] Complex networking of Container Infrastructure (Approaches for real usage scenarios)
 - [X] Make Image available (via Dockerfile, Registry or Archive file)
 - [ ] CI setup (Continuous Integration)
