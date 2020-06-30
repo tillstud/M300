@@ -714,10 +714,10 @@ In a microservices architecture, it is possible to scale only the resources that
 - [x] Documentation is written in Markdown
 - [x] MarkDown editor selected and setup
 - [x] MarkDown is properly structured
-- [ ] Personal Knowledge base on the following topics is documented:
-  - [ ] Container
-  - [ ] Docker
-  - [ ] Micro-services
+- [X] Personal Knowledge base on the following topics is documented:
+  - [X] Container
+  - [X] Docker
+  - [X] Micro-services
 - [x] Important Learning steps are documented
 ### K3 | Docker
 - [x] Combine existing Docker containers
