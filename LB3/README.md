@@ -27,8 +27,6 @@
         - [Installation](#installation-1)
       - [Micro-services](#micro-services)
     - [Reflection](#reflection)
-      - [General](#general)
-      - [Lessons Learned](#lessons-learned)
   - [Grading criteria](#grading-criteria)
     - [K1 | Tool environment](#k1--tool-environment)
     - [K2 | Learning environment](#k2--learning-environment)
@@ -701,12 +699,12 @@ In a microservices architecture, it is possible to scale only the resources that
 
 ### Reflection
 
-#### General
+I was already familiar with Git, GitHub, VSCode, Python 3 and somewhat with Linux.
+But before this project I hadn't written Dockerfile whatsoever, so everything was new to me.
 
-
-
-#### Lessons Learned
-
+At first this was quite overwhelming, but after a couple of sessions I got the hang of if quite quickly.
+I started to use docker compose with `docker-compose kill && docker-compose rm` and `docker-compose up -d --build` and wrote down the command I had used inside the container (`docker exec -it [THE_CONTAINER_NAME] bash`), so I could trace back what I did and put the commands into my Dockerfile.
+This time I didn't make the mistake of spending most of my time on Theory, rather focus on my project and treat the Theory documentation part rather as a side-task.
 
 ---
 ---
@@ -770,8 +768,8 @@ In a microservices architecture, it is possible to scale only the resources that
 - [X] Contribute to the original Documentation
   - Bestehenden Docker-`Dontainer` kombinieren
   - MAINTAINER ist veraltet (https://docs.docker.com/engine/reference/builder/#maintainer-deprecated)
-- [ ] Comparison prior vs increased knowledge
-- [ ] Reflection
+- [X] Comparison prior vs increased knowledge
+- [X] Reflection
 
 ### K6 | Misc criteria (Systems engineers)
 
