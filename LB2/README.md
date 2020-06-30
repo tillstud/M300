@@ -748,13 +748,17 @@ I also learned how to use Python as a backend (something which I have always wan
 ---
 
 ## Grading criteria
+
 ### K1 | Tool environment
+
 - [x] VirtualBox
 - [x] Vagrant
 - [x] VS Code
 - [x] Git Client
 - [X] SSH Key for Client
+
 ### K2 | Learning environment
+
 - [x] GitHub Account created
 - [x] Git-Client was used
 - [x] Documentation is written in Markdown
@@ -768,7 +772,9 @@ I also learned how to use Python as a backend (something which I have always wan
   - [x] Mark Down
   - [x] System Security
 - [x] Important Learning steps are documented
+
 ### K3 | Vagrant
+
 - [X] Setup VM from Vagrant Cloud
 - [X] Knows the Vagrant Commands
 - [X] Setup is documented
@@ -778,14 +784,18 @@ I also learned how to use Python as a backend (something which I have always wan
 - [X] Functionality tested with Test cases
 - [X] second prebuilt VM from Vagrant setup
 - [x] Project documented with MarkDown
+
 ### K4 | Security
+
 - [X] Firewall with Rules is setup
 - [X] Reverse-Proxy is setup
 - [ ] User and Rights distribution is setup
 - [X] Access via SSH tunnel is secured
 - [X] Security measures are documented
 - [x] Project documented with MarkDown
+
 ### K5 | Misc criteria
+
 - [X] Creativity
 - [X] Complexity
 - [ ] Scope
