@@ -1,7 +1,8 @@
 #!/usr/bin/python
 
-import cgi, cgitb
+import cgi, cgitb  # to pars the web input
 import mysql.connector  # For Help: https://dev.mysql.com/doc/connector-python/en/connector-python-examples.html
+import sys, getopt  # for the CLI
 
 
 # defining the functions
@@ -77,5 +78,25 @@ form = cgi.FieldStorage()
 uname = form.getvalue("uname")
 proposal = form.getvalue("proposal")
 
+def cli(argv):
+    """This function provides the Comand line interface"""
+    uname = ""
+    proposal = ""
+    try:
+       opts, args = getopt.getopt(argv,"h:n:p:",["uname=","proposal="])
+    except getopt.GetoptError:
+       print ("backend.py -n <uname> -p <proposal>")
+       sys.exit(2)
+    for opt, arg in opts:
+       if opt == "-h":
+          print ("backend.py -n <uname> -p <proposal>")
+          sys.exit()
+       elif opt in ("-n", "--uname"):
+          uname = arg
+       elif opt in ("-p", "--proposal"):
+          proposal = arg
+    return uname, proposal
+
+uname, proposal = cli(sys.argv[1:])
 write_sql(uname, proposal)
 read_sql()
