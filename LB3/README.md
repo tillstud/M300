@@ -763,7 +763,7 @@ This time I didn't make the mistake of spending most of my time on Theory, rathe
 - [x] Service monitoring is implemented
 - [ ] Active notifications are setup
 - [X] min. 3 aspects of Container segmentation are taken into consideration
-  - [X] Kernel Exploits
+  - [ ] Kernel Exploits
   - [X] Denial-of-Service-(DoS-) Attacks
   - [X] Container-Breakouts
   - [X] Poisoned images
