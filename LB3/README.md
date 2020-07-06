@@ -113,7 +113,6 @@ In general I'm not quite happy with the Security measures taken, because for exa
 I wouldn't expose this setup to the Internet!
 
 #### Aspects
-- Currently kernel exploits are somewhat prohibit, because I enabled automatic updates on my Host (`Ubuntu 20.04`), but this step isn't configured in the Dockerfile and therefor has to be done by everybody themselves. 
 - DoS-attacks are only monitored, via the HEALTHCHECK of `web` Container, but not actively hindered. For this a provider like Cloudflare or load-balancer would be needed.
 - Container-Breakouts are possible and very dangerous, because my Docker-Engine is run as root. This means that if a malicious actor can breakout of the container he/she will have root access on the host and can do whatever he/she wants. Currently this isn't a big issue, since I don't have any critical information stored on my docker host.
 - Poisoned images, are not a problem since I'm strictly using verified images. If a malicious actor would want to poison them he/she would have to start a MITM (Man-in-the-middle) attack.
